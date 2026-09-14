@@ -1,6 +1,6 @@
 # Restaurant Analytics Platform
 
-An end-to-end **Databricks Lakehouse** project that models a fictional restaurant chain's data — orders, customers, restaurants, menu items, and reviews — through a full **medallion architecture** (Bronze → Silver → Gold) on Azure, with sentiment analysis powered by Databricks Mosaic AI.
+An end-to-end **Databricks Lakehouse** project that models a fictional restaurant chain's data - orders, customers, restaurants, menu items, and reviews - through a full **medallion architecture** (Bronze → Silver → Gold) on Azure, with sentiment analysis powered by Databricks Mosaic AI.
 
 ## Architecture
 
@@ -11,12 +11,12 @@ An end-to-end **Databricks Lakehouse** project that models a fictional restauran
 - Batch dimensional data (`customers`, `restaurants`, `menu_items`, `historical_orders`, `reviews`) is sourced from an **Azure SQL Database** via **Lakeflow Connect**
 - Both paths are ingested using **Spark Declarative Pipelines (SDP)**
 
-**Bronze Layer** — raw, ingested-as-is data
+**Bronze Layer** - raw, ingested-as-is data
 - `01_bronze.orders` (streaming + one-time historical backfill)
 - `01_bronze.historical_orders`
 - `01_bronze.reviews`
 
-**Silver Layer** — cleaned, conformed, modeled data
+**Silver Layer** - cleaned, conformed, modeled data
 - `02_silver.fact_orders`
 - `02_silver.fact_order_items`
 - `02_silver.dim_customer`
@@ -24,7 +24,7 @@ An end-to-end **Databricks Lakehouse** project that models a fictional restauran
 - `02_silver.dim_menu_items`
 - `02_silver.fact_reviews`
 
-**Gold Layer** — business-ready, aggregated tables
+**Gold Layer** - business-ready, aggregated tables
 - `03_gold.d_sales_summary`
 - `03_gold.d_customer_360`
 - `03_gold.d_restaurant_reviews`
@@ -115,4 +115,4 @@ Five core entities are synthetically generated: `historical_orders`, `customers`
 ## Acknowledgements
 
 This project is sourced from the Databricks Masterclass repository:
-**[afaqueahmad7117/databricks-masterclass — databricks-e2e-project](https://github.com/afaqueahmad7117/databricks-masterclass/tree/main/projects/databricks-e2e-project)**
+**[afaqueahmad7117/databricks-masterclass - databricks-e2e-project](https://github.com/afaqueahmad7117/databricks-masterclass/tree/main/projects/databricks-e2e-project)**
