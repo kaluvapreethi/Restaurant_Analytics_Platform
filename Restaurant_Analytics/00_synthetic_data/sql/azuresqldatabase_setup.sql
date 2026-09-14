@@ -1,4 +1,4 @@
-CREATE TABLE SCHEMA_NAME.historical_orders (
+CREATE TABLE DBO.historical_orders (
     order_id VARCHAR(256) PRIMARY KEY,
     order_timestamp DATETIME2,
     restaurant_id VARCHAR(256),
@@ -10,7 +10,7 @@ CREATE TABLE SCHEMA_NAME.historical_orders (
     order_status VARCHAR(256)
 );
 
-CREATE TABLE SCHEMA_NAME.reviews (
+CREATE TABLE DBO.reviews (
     review_id VARCHAR(256) PRIMARY KEY,
     order_id VARCHAR(256),
     customer_id VARCHAR(256),
@@ -20,7 +20,7 @@ CREATE TABLE SCHEMA_NAME.reviews (
     review_timestamp DATETIME2
 );
 
-CREATE TABLE SCHEMA_NAME.customers (
+CREATE TABLE DBO.customers (
     customer_id VARCHAR(256) PRIMARY KEY,
     name VARCHAR(256),
     email VARCHAR(256),
@@ -29,7 +29,7 @@ CREATE TABLE SCHEMA_NAME.customers (
     join_date DATE,
 );
 
-CREATE TABLE SCHEMA_NAME.menu_items (
+CREATE TABLE DBO.menu_items (
     restaurant_id VARCHAR(256),
     item_id VARCHAR(256),
     name VARCHAR(256),
@@ -41,7 +41,7 @@ CREATE TABLE SCHEMA_NAME.menu_items (
     PRIMARY KEY (restaurant_id, item_id)
 );
 
-CREATE TABLE SCHEMA_NAME.restaurants (
+CREATE TABLE DBO.restaurants (
     restaurant_id VARCHAR(256) PRIMARY KEY,
     name VARCHAR(256),
     city VARCHAR(256),
@@ -54,7 +54,7 @@ CREATE TABLE SCHEMA_NAME.restaurants (
 -- Now run projects/databricks-e2e-project/sql/utility_script.sql
 -- https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sql-server-utility
 
-ALTER DATABASE DB_NAME SET CHANGE_TRACKING = ON (CHANGE_RETENTION = 14 DAYS, AUTO_CLEANUP = ON);
+ALTER DATABASE restaurant_ops_db SET CHANGE_TRACKING = ON (CHANGE_RETENTION = 14 DAYS, AUTO_CLEANUP = ON);
 
 -- Note: replace 'dbo' with the schema you're using
 ALTER TABLE dbo.customers ENABLE CHANGE_TRACKING;
@@ -96,12 +96,12 @@ EXEC sys.sp_cdc_enable_table
 GO;
 
 EXEC dbo.lakeflowFixPermissions
-    @User = 'databrickse2eprojUserAdmin',
+    @User = 'sp_cdc_enable_db',
     @Tables = 'ALL';
 
 EXEC dbo.lakeflowSetupChangeTracking
     @Tables = 'ALL',
-    @User = 'your_user';
+    @User = 'lakeflow_reader';
 
 -- Enable CDC on specific tables
 EXEC dbo.lakeflowSetupChangeDataCapture

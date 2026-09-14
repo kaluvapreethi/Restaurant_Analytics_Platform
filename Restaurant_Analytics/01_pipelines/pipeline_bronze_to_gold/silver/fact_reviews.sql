@@ -44,5 +44,5 @@ FROM (
         'Review text: ', review_text
       )
     ) AS analysis_json
-  FROM STREAM(`ws_testproj`.`01_bronze`.reviews)
+  FROM STREAM(`01_bronze`.reviews)
 );
